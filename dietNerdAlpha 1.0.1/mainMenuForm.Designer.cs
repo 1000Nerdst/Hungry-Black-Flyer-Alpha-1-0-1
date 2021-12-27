@@ -108,6 +108,7 @@ namespace dietNerdAlpha_1._0._1
             this.ingredientsButton.TabIndex = 5;
             this.ingredientsButton.Text = "Ingredients";
             this.ingredientsButton.UseVisualStyleBackColor = true;
+            this.ingredientsButton.Click += new System.EventHandler(this.ingredientsButton_Click);
             // 
             // viewGroceryListButton
             // 
@@ -138,7 +139,6 @@ namespace dietNerdAlpha_1._0._1
             this.label2.Size = new System.Drawing.Size(107, 15);
             this.label2.TabIndex = 8;
             this.label2.Text = "Avaliable Recipices";
-            //this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
             // 
@@ -223,7 +223,6 @@ namespace dietNerdAlpha_1._0._1
             this.label5.Size = new System.Drawing.Size(31, 15);
             this.label5.TabIndex = 13;
             this.label5.Text = "Goal";
-            //this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // caloricGoalTextBox
             // 

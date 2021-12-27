@@ -95,6 +95,12 @@ namespace dietNerdAlpha_1._0._1
             newMealPlanForm.ShowDialog();
         }
 
+        private void ingredientsButton_Click(object sender, EventArgs e)
+        {
+            ingredientsForm ingredientsForm = new ingredientsForm();
+            ingredientsForm.ShowDialog();
+        }
+
         //private void fillIngredientsListBox()
         //{
         //    cn = new SqlConnection(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\solow\OneDrive\Desktop\Projects\Flyer Pitch\dietNerdAlpha 1.0.0\dietNerdAlpha 1.0.0\wholeAppDataBase.mdf; Integrated Security = True");
