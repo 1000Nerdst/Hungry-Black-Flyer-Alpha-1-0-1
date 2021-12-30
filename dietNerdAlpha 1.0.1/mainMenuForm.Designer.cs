@@ -98,6 +98,7 @@ namespace dietNerdAlpha_1._0._1
             this.recipiesButton.TabIndex = 4;
             this.recipiesButton.Text = "Recipies";
             this.recipiesButton.UseVisualStyleBackColor = true;
+            this.recipiesButton.Click += new System.EventHandler(this.recipiesButton_Click);
             // 
             // ingredientsButton
             // 

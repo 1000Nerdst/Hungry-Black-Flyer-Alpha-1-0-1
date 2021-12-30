@@ -218,4 +218,62 @@ namespace dietNerdAlpha_1._0._1
         public string[] nightRecipesIDs { get; internal set; }
         public string[] sidesRecipesIDs { get; internal set; }
     }
+
+    class getPythonOptions
+    {
+        public string[] servingUnit { get; internal set; }
+        public float[] multipler { get; internal set; }
+    }
+
+    class CurrentIngredients
+    {
+        public string ingredientName { get; internal set; }
+        public string ingredientStdServingSize { get; internal set; }
+        public float ingredientCalories { get; internal set; }
+        public float ingredientFats { get; internal set; }
+        public float ingredientCarbohydrates { get; internal set; }
+        public float ingredientProtein { get; internal set; }
+        public float ingredientCholesterol { get; internal set; }
+        public float ingredientTransFats { get; internal set; }
+        public float ingredientSurgar { get; internal set; }
+        public float ingredientStaFats { get; internal set; }
+        public float ingredientFiber { get; internal set; }
+        public float ingredientVitaminA { get; internal set; }
+        public float ingredientVitaminB1 { get; internal set; }
+        public float ingredientVitaminB2 { get; internal set; }
+        public float ingredientVitaminB3 { get; internal set; }
+        public float ingredientVitaminB5 { get; internal set; }
+        public float ingredientVitaminB6 { get; internal set; }
+        public float ingredientVitaminB7 { get; internal set; }
+        public float ingredientVitaminB9 { get; internal set; }
+        public float ingredientVitaminB12 { get; internal set; }
+        public float ingredientVitaminC { get; internal set; }
+        public float ingredientVitaminD { get; internal set; }
+        public float ingredientVitaminE { get; internal set; }
+        public float ingredientVitaminK { get; internal set; }
+        public float ingredientCholine { get; internal set; }
+        public float ingredientCalcium { get; internal set; }
+        public float ingredientChloride { get; internal set; }
+        public float ingredientChromium { get; internal set; }
+        public float ingredientCopper { get; internal set; }
+        public float ingredientFluoride { get; internal set; }
+        public float ingredientIodine { get; internal set; }
+        public float ingredientIron { get; internal set; }
+        public float ingredientMagnesium { get; internal set; }
+        public float ingredientManganese { get; internal set; }
+        public float ingredientMolybdenum { get; internal set; }
+        public float ingredientPhosphorus { get; internal set; }
+        public float ingredientPotassium { get; internal set; }
+        public float ingredientSelenium { get; internal set; }
+        public float ingredientSodium { get; internal set; }
+        public float ingredientSulfur { get; internal set; }
+        public float ingredientZinc { get; internal set; }
+        public float ingredientOmega3 { get; internal set; }
+        public float ingredientOmega6 { get; internal set; }
+        public float ingredientALA { get; internal set; }
+        public float ingredientEPA { get; internal set; }
+        public float ingredientDPA { get; internal set; }
+        public float ingredientDHA { get; internal set; }
+
+    }
 }

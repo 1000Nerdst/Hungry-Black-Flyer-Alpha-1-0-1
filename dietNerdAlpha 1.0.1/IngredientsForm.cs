@@ -13,10 +13,10 @@ namespace dietNerdAlpha_1._0._1
 {
     public partial class ingredientsForm : Form
     {
-        //SqlConnection cn;
-        //SqlCommand cmd;
-        //SqlDataReader dr;
-        //SqlDataAdapter da;
+        SqlConnection cn;
+        SqlCommand cmd;
+        SqlDataReader dr;
+        SqlDataAdapter da;
         public ingredientsForm()
         {
             InitializeComponent();
@@ -53,12 +53,12 @@ namespace dietNerdAlpha_1._0._1
 
         private void fillIngredientsListBox()
         {
-            //cn = new SqlConnection(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\solow\OneDrive\Desktop\Projects\Flyer Pitch\dietNerdAlpha 1.0.0\dietNerdAlpha 1.0.0\wholeAppDataBase.mdf; Integrated Security = True");
-            //cmd = new SqlCommand();
-            //cn.Open();
-            //cmd.Connection = cn;
-            //cmd.CommandText = "Select * from tblIndiviualFoods";
-            //dr = cmd.ExecuteReader();
+            cn = new SqlConnection(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\solow\OneDrive\Desktop\Projects\Hungry Flyer\dietNerdAlpha 1.0.1\dietNerdAlpha 1.0.1\dietNerdAlpha 1.0.1\wholeAppData.mdf; Integrated Security = True");
+            cmd = new SqlCommand();
+            cn.Open();
+            cmd.Connection = cn;
+            cmd.CommandText = "Select * from ingrentsTable";
+            dr = cmd.ExecuteReader();
 
             List<string> clearIngredientListBox = new List<string>();
             clearIngredientListBox.Add(" ");
@@ -66,16 +66,16 @@ namespace dietNerdAlpha_1._0._1
             ingredientsListBox.DataSource = clearIngredientListBox;
 
             List<string> foodNameStringList = new List<string>();
-            //while (dr.Read())
-            //{
-            //    foodNameStringList.Add((string)dr["foodName"]);
-            //}
-            //ingredientsListBox.DataSource = foodNameStringList;
+            while (dr.Read())
+            {
+                foodNameStringList.Add((string)dr["IngredentName"]);
+            }
+            ingredientsListBox.DataSource = foodNameStringList;
 
-            //dr.Dispose();
-            //dr.Close();
+            dr.Dispose();
+            dr.Close();
 
-            //cn.Close();
+            cn.Close();
         }
         private void getCurrentIngredientsDataBase()
         {
@@ -94,20 +94,20 @@ namespace dietNerdAlpha_1._0._1
                 string selectedItem = ingredientsListBox.SelectedItem.ToString();
                 string selectedItemIndex = ingredientsListBox.SelectedIndex.ToString();
 
-                string table = "tblIndiviualFoods";
-                string columbName = "foodName";
+                string table = "ingrentsTable";
+                string columbName = "IngredentName";
                 string columnItem = selectedItem;
                 deleteRow(table, columbName, columnItem);
                 DataTable dt = new DataTable();
 
                 dt.Clear();
                 ingredientsListBox.DataSource = dt;
-                //ingredientsListBox.DisplayMember = "foodName";
+                ingredientsListBox.DisplayMember = "IngredentName";
 
-                //ingredientsListBox.Items.Clear();
+                ingredientsListBox.Items.Clear();
 
                 mainMenuForm mainMenu = new mainMenuForm();
-                //mainMenu.updateMainWindow();
+                mainMenu.updateMainWindow();
 
                 fillIngredientsListBox();
 
@@ -116,8 +116,8 @@ namespace dietNerdAlpha_1._0._1
 
         private void addNewToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //addNewSingleFoodItemForm addNewSingleFoodItemForm = new addNewSingleFoodItemForm();
-            //addNewSingleFoodItemForm.ShowDialog();
+            AddNewIngredentsForm addNewIngredents = new AddNewIngredentsForm();
+            addNewIngredents.ShowDialog();
             fillIngredientsListBox();
         }
 
@@ -188,6 +188,12 @@ namespace dietNerdAlpha_1._0._1
         private void updateIngredientScreen()
         {
             fillIngredientsListBox();
+        }
+
+        private void addNewIngredientButton_Click_1(object sender, EventArgs e)
+        {
+            AddNewIngredentsForm addNewIngredents = new AddNewIngredentsForm();
+            addNewIngredents.ShowDialog();
         }
     }
 }
