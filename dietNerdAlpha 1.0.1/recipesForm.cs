@@ -13,10 +13,12 @@ namespace dietNerdAlpha_1._0._1
 {
     public partial class recipesForm : Form
     {
-        SqlConnection cn;
+        //SqlConnection cn;
         SqlCommand cmd;
         SqlDataReader dr;
         SqlDataAdapter da;
+
+        SqlConnection cn = new SqlConnection(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\solow\OneDrive\Desktop\Projects\Hungry Flyer\dietNerdAlpha 1.0.1\dietNerdAlpha 1.0.1\dietNerdAlpha 1.0.1\wholeAppData.mdf; Integrated Security = True");
 
         public recipesForm()
         {
@@ -37,11 +39,12 @@ namespace dietNerdAlpha_1._0._1
 
         private void fillRecipieListBox()
         {
-            using (cn = new SqlConnection(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\solow\OneDrive\Desktop\Projects\Flyer Pitch\dietNerdAlpha 1.0.0\dietNerdAlpha 1.0.0\wholeAppDataBase.mdf; Integrated Security = True"))
+            using (cn = new SqlConnection(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\solow\OneDrive\Desktop\Projects\Hungry Flyer\dietNerdAlpha 1.0.1\dietNerdAlpha 1.0.1\dietNerdAlpha 1.0.1\wholeAppData.mdf; Integrated Security = True"))
             {
+                cn.Close();
                 cn.Open();
 
-                using (cmd = new SqlCommand("Select * from recipiesTable", cn))
+                using (cmd = new SqlCommand("Select * from recipeTable", cn))
                 {
                     using (dr = cmd.ExecuteReader())
                     {
@@ -78,9 +81,9 @@ namespace dietNerdAlpha_1._0._1
 
         private void searchDataBase(string namedSearch)
         {
-            cn = new SqlConnection(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\solow\OneDrive\Desktop\Projects\Flyer Pitch\dietNerdAlpha 1.0.0\dietNerdAlpha 1.0.0\wholeAppDataBase.mdf; Integrated Security = True");
+            
             cn.Open();
-            cmd = new SqlCommand("SELECT * FROM dbo.recipiesTable WHERE recipeName = '" + namedSearch + "'", cn);
+            cmd = new SqlCommand("SELECT * FROM dbo.recipeTable WHERE recipeName = '" + namedSearch + "'", cn);
 
             da = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();

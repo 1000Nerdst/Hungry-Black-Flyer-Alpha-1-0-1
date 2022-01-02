@@ -35,6 +35,7 @@ namespace dietNerdAlpha_1._0._1
 
                 saveToSettings();
 
+                GenerateNewMealPlanV1 generateNewMealPlan = new GenerateNewMealPlanV1();
                 //generateNewMealPlanV1 generatePlan = new generateNewMealPlanV1();
                 //generateNewPlanV3 generatePlanBeta = new generateNewPlanV3();
                 //generateNewPlanV2 generatePlan = new generateNewPlanV2();

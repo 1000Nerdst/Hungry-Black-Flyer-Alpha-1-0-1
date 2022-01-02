@@ -138,30 +138,6 @@ namespace dietNerdAlpha_1._0._1
         public bool previousIsMealPrep { get; internal set; }
     }
 
-    class mealTotals
-    {
-        public string[,] mealArray { get; internal set; }
-        public double totalCalories { get; internal set; }
-        public double totalProtein { get; internal set; }
-        public double totalCarbs { get; internal set; }
-        public double totalFats { get; internal set; }
-        public double totalCalcium { get; internal set; }
-        public double totalSodium { get; internal set; }
-        public double totalCholesterol { get; internal set; }
-        public double totalVitaminD { get; internal set; }
-        public double totalIron { get; internal set; }
-        public double totalPotassium { get; internal set; }
-        public double totalVitaminA { get; internal set; }
-        public double totalVitaminC { get; internal set; }
-        public double totalVitaminE { get; internal set; }
-        public double totalVitaminB6 { get; internal set; }
-        public double totalMagnesium { get; internal set; }
-        public double totalZinc { get; internal set; }
-        public bool hasMainCourse { get; internal set; }
-        public bool needsSideItems { get; internal set; }
-
-    }
-
     class planTotals
     {
         public string[,] mealArray { get; internal set; }
@@ -198,7 +174,8 @@ namespace dietNerdAlpha_1._0._1
         public int afternoonSize { get; internal set; }
         public int dinnerSize { get; internal set; }
         public int nightSize { get; internal set; }
-        public int sidesSize { get; internal set; }
+        public int lunchSidesSize { get; internal set; }
+        public int dinnerSidesSize { get; internal set; }
     }
 
     class filledTypeArrays
@@ -209,14 +186,16 @@ namespace dietNerdAlpha_1._0._1
         public string[] afternoonRecipes { get; internal set; }
         public string[] dinnerRecipes { get; internal set; }
         public string[] nightRecipes { get; internal set; }
-        public string[] sidesRecipes { get; internal set; }
+        public string[] lunchSidesRecipes { get; internal set; }
+        public string[] dinnerSidesRecipes { get; internal set; }
         public string[] breakfastRecipesIDs { get; internal set; }
         public string[] midMorningRecipesIDs { get; internal set; }
         public string[] lunchRecipesIDs { get; internal set; }
         public string[] afternoonRecipesIDs { get; internal set; }
         public string[] dinnerRecipesIDs { get; internal set; }
         public string[] nightRecipesIDs { get; internal set; }
-        public string[] sidesRecipesIDs { get; internal set; }
+        public string[] lunchSidesRecipesIDs { get; internal set; }
+        public string[] dinnerSidesRecipesIDs { get; internal set; }
     }
 
     class getPythonOptions
@@ -274,6 +253,111 @@ namespace dietNerdAlpha_1._0._1
         public float ingredientEPA { get; internal set; }
         public float ingredientDPA { get; internal set; }
         public float ingredientDHA { get; internal set; }
+
+    }
+    class CurrentRecipe
+    {
+        public string recipeName { get; internal set; }
+        public string recipeTiming { get; internal set; }
+        public float recipeCalories { get; internal set; }
+        public float recipeFats { get; internal set; }
+        public float recipeCarbohydrates { get; internal set; }
+        public float recipeProtein { get; internal set; }
+        public float recipeCholesterol { get; internal set; }
+        public float recipeTransFats { get; internal set; }
+        public float recipeSurgar { get; internal set; }
+        public float recipeStaFats { get; internal set; }
+        public float recipeFiber { get; internal set; }
+        public float recipeVitaminA { get; internal set; }
+        public float recipeVitaminB1 { get; internal set; }
+        public float recipeVitaminB2 { get; internal set; }
+        public float recipeVitaminB3 { get; internal set; }
+        public float recipeVitaminB5 { get; internal set; }
+        public float recipeVitaminB6 { get; internal set; }
+        public float recipeVitaminB7 { get; internal set; }
+        public float recipeVitaminB9 { get; internal set; }
+        public float recipeVitaminB12 { get; internal set; }
+        public float recipeVitaminC { get; internal set; }
+        public float recipeVitaminD { get; internal set; }
+        public float recipeVitaminE { get; internal set; }
+        public float recipeVitaminK { get; internal set; }
+        public float recipeCholine { get; internal set; }
+        public float recipeCalcium { get; internal set; }
+        public float recipeChloride { get; internal set; }
+        public float recipeChromium { get; internal set; }
+        public float recipeCopper { get; internal set; }
+        public float recipeFluoride { get; internal set; }
+        public float recipeIodine { get; internal set; }
+        public float recipeIron { get; internal set; }
+        public float recipeMagnesium { get; internal set; }
+        public float recipeManganese { get; internal set; }
+        public float recipeMolybdenum { get; internal set; }
+        public float recipePhosphorus { get; internal set; }
+        public float recipePotassium { get; internal set; }
+        public float recipeSelenium { get; internal set; }
+        public float recipeSodium { get; internal set; }
+        public float recipeSulfur { get; internal set; }
+        public float recipeZinc { get; internal set; }
+        public float recipeOmega3 { get; internal set; }
+        public float recipeOmega6 { get; internal set; }
+        public float recipeALA { get; internal set; }
+        public float recipeEPA { get; internal set; }
+        public float recipeDPA { get; internal set; }
+        public float recipeDHA { get; internal set; }
+        public string ingredentNames { get; internal set; }
+        public string ingredentSizes { get; internal set; }
+        public string ingredentIds { get; internal set; }
+
+    }
+
+    class mealTotals
+    {
+        public string[,] namesAndServing { get; internal set; }
+        public float totalCalories { get; internal set; }
+        public float totalFats { get; internal set; }
+        public float totalCarbohydrates { get; internal set; }
+        public float totalProtein { get; internal set; }
+        public float totalCholesterol { get; internal set; }
+        public float totalTransFats { get; internal set; }
+        public float totalSurgar { get; internal set; }
+        public float totalStaFats { get; internal set; }
+        public float totalFiber { get; internal set; }
+        public float totalVitaminA { get; internal set; }
+        public float totalVitaminB1 { get; internal set; }
+        public float totalVitaminB2 { get; internal set; }
+        public float totalVitaminB3 { get; internal set; }
+        public float totalVitaminB5 { get; internal set; }
+        public float totalVitaminB6 { get; internal set; }
+        public float totalVitaminB7 { get; internal set; }
+        public float totalVitaminB9 { get; internal set; }
+        public float totalVitaminB12 { get; internal set; }
+        public float totalVitaminC { get; internal set; }
+        public float totalVitaminD { get; internal set; }
+        public float totalVitaminE { get; internal set; }
+        public float totalVitaminK { get; internal set; }
+        public float totalCholine { get; internal set; }
+        public float totalCalcium { get; internal set; }
+        public float totalChloride { get; internal set; }
+        public float totalChromium { get; internal set; }
+        public float totalCopper { get; internal set; }
+        public float totalFluoride { get; internal set; }
+        public float totalIodine { get; internal set; }
+        public float totalIron { get; internal set; }
+        public float totalMagnesium { get; internal set; }
+        public float totalManganese { get; internal set; }
+        public float totalMolybdenum { get; internal set; }
+        public float totalPhosphorus { get; internal set; }
+        public float totalPotassium { get; internal set; }
+        public float totalSelenium { get; internal set; }
+        public float totalSodium { get; internal set; }
+        public float totalSulfur { get; internal set; }
+        public float totalZinc { get; internal set; }
+        public float totalOmega3 { get; internal set; }
+        public float totalOmega6 { get; internal set; }
+        public float totalALA { get; internal set; }
+        public float totalEPA { get; internal set; }
+        public float totalDPA { get; internal set; }
+        public float totalDHA { get; internal set; }
 
     }
 }

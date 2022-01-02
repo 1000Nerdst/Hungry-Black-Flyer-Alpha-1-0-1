@@ -86,7 +86,7 @@ namespace dietNerdAlpha_1._0._1
             {
                 while (dr.Read())
                 {
-                    IDList.Add((int)dr["recipeId"]);
+                    IDList.Add((int)dr["Id"]);
                 }
             }
 

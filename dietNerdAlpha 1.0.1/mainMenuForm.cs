@@ -22,21 +22,21 @@ namespace dietNerdAlpha_1._0._1
             InitializeComponent();
 
             var config = System.Configuration.ConfigurationManager.OpenExeConfiguration(System.Configuration.ConfigurationUserLevel.None);
-            activeDayTextBox.Text = config.AppSettings.Settings["userWeeklyActiveDays"].Value;
-            weeklyGoalTextBox.Text = config.AppSettings.Settings["currentGoal"].Value;
-            caloricGoalTextBox.Text = config.AppSettings.Settings["totalDailyIntake"].Value;
+            activeDayTextBox.Text = config.AppSettings.Settings["userWeeklyActiveDays"].Value.ToString();
+            weeklyGoalTextBox.Text = config.AppSettings.Settings["currentGoal"].Value.ToString();
+            caloricGoalTextBox.Text = config.AppSettings.Settings["totalDailyIntake"].Value.ToString();
 
             int numberOfNewFoodItems = 0, recipiesOfNewFoodItems = 0;
             config.AppSettings.Settings["numberOfNewIngredentsItems"].Value = numberOfNewFoodItems.ToString();
             config.AppSettings.Settings["numberOfNewRecipiesItems"].Value = recipiesOfNewFoodItems.ToString();
-            activeDayTextBox.Text = System.Configuration.ConfigurationManager.AppSettings["activeDays"];
-            weeklyGoalTextBox.Text = System.Configuration.ConfigurationManager.AppSettings["currentGoal"];
-            caloricGoalTextBox.Text = System.Configuration.ConfigurationManager.AppSettings["caloricGoal"];
+            //activeDayTextBox.Text = System.Configuration.ConfigurationManager.AppSettings["activeDays"];
+            //weeklyGoalTextBox.Text = System.Configuration.ConfigurationManager.AppSettings["currentGoal"];
+            //caloricGoalTextBox.Text = System.Configuration.ConfigurationManager.AppSettings["caloricGoal"];
 
             config.Save(System.Configuration.ConfigurationSaveMode.Modified);
 
             fillIngredientsListBox();
-            //fillRecipieListBox();
+            fillRecipieListBox();
         }
 
         //private void button1_Click(object sender, EventArgs e)
@@ -141,40 +141,40 @@ namespace dietNerdAlpha_1._0._1
             recipes.ShowDialog();
         }
 
-        //private void fillRecipieListBox()
-        //{
-        //    using (cn = new SqlConnection(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\solow\OneDrive\Desktop\Projects\Flyer Pitch\dietNerdAlpha 1.0.0\dietNerdAlpha 1.0.0\wholeAppDataBase.mdf; Integrated Security = True"))
-        //    {
-        //        cn.Open();
+        private void fillRecipieListBox()
+        {
+            using (cn = new SqlConnection(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\solow\OneDrive\Desktop\Projects\Hungry Flyer\dietNerdAlpha 1.0.1\dietNerdAlpha 1.0.1\dietNerdAlpha 1.0.1\wholeAppData.mdf; Integrated Security = True"))
+            {
+                cn.Open();
 
-        //        using (cmd = new SqlCommand("Select * from recipiesTable", cn))
-        //        {
-        //            using (dr = cmd.ExecuteReader())
-        //            {
-        //                if (dr != null)
-        //                {
-        //                    List<string> clearIngredientListBox = new List<string>();
-        //                    clearIngredientListBox.Add(" ");
+                using (cmd = new SqlCommand("Select * from recipeTable", cn))
+                {
+                    using (dr = cmd.ExecuteReader())
+                    {
+                        if (dr != null)
+                        {
+                            List<string> clearIngredientListBox = new List<string>();
+                            clearIngredientListBox.Add(" ");
 
-        //                    avaliableRecipiecesListBox.DataSource = clearIngredientListBox;
+                            avaliableRecipiecesListBox.DataSource = clearIngredientListBox;
 
-        //                    List<string> recipeNameStringList = new List<string>();
-        //                    while (dr.Read())
-        //                    {
-        //                        recipeNameStringList.Add((string)dr["recipeName"]);
-        //                    }
-        //                    avaliableRecipiecesListBox.DataSource = recipeNameStringList;
-        //                }
-        //            }
-        //            dr.Dispose();
-        //            dr.Close();
-        //        }
-        //        cmd.Dispose();
-        //    }
+                            List<string> recipeNameStringList = new List<string>();
+                            while (dr.Read())
+                            {
+                                recipeNameStringList.Add((string)dr["recipeName"]);
+                            }
+                            avaliableRecipiecesListBox.DataSource = recipeNameStringList;
+                        }
+                    }
+                    dr.Dispose();
+                    dr.Close();
+                }
+                cmd.Dispose();
+            }
 
-        //    cn.Dispose();
-        //    cn.Close();
-        //}
+            cn.Dispose();
+            cn.Close();
+        }
 
         //private void editToolStripMenuItem_Click(object sender, EventArgs e)
         //{

@@ -46,7 +46,7 @@ namespace dietNerdAlpha_1._0._1
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.recipieServingTextBox = new System.Windows.Forms.TextBox();
-            this.ingfredientsListView = new System.Windows.Forms.ListView();
+            this.ingredientsListView = new System.Windows.Forms.ListView();
             this.ingredientName = new System.Windows.Forms.ColumnHeader();
             this.servingSize = new System.Windows.Forms.ColumnHeader();
             this.breakfastCheckBox = new System.Windows.Forms.CheckBox();
@@ -56,6 +56,7 @@ namespace dietNerdAlpha_1._0._1
             this.nightCheckBox = new System.Windows.Forms.CheckBox();
             this.dinnerCheckBox = new System.Windows.Forms.CheckBox();
             this.sideCheckBox = new System.Windows.Forms.CheckBox();
+            this.mealPrepCheckBox = new System.Windows.Forms.CheckBox();
             this.indgredentsListBoxContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -96,13 +97,14 @@ namespace dietNerdAlpha_1._0._1
             this.viewIngredientToolStripMenuItem,
             this.resetToolStripMenuItem});
             this.indgredentsListBoxContextMenuStrip.Name = "indgredentsListBoxContextMenuStrip";
-            this.indgredentsListBoxContextMenuStrip.Size = new System.Drawing.Size(181, 92);
+            this.indgredentsListBoxContextMenuStrip.Size = new System.Drawing.Size(181, 114);
             // 
             // addToRecipieToolStripMenuItem
             // 
             this.addToRecipieToolStripMenuItem.Name = "addToRecipieToolStripMenuItem";
             this.addToRecipieToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.addToRecipieToolStripMenuItem.Text = "Add To Recipie";
+            this.addToRecipieToolStripMenuItem.Click += new System.EventHandler(this.addToRecipieToolStripMenuItem_Click_1);
             // 
             // addNewIngredientToolStripMenuItem
             // 
@@ -170,6 +172,7 @@ namespace dietNerdAlpha_1._0._1
             this.saveButton.TabIndex = 9;
             this.saveButton.Text = "Save";
             this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // label4
             // 
@@ -200,19 +203,19 @@ namespace dietNerdAlpha_1._0._1
             this.recipieServingTextBox.TabIndex = 6;
             this.recipieServingTextBox.Text = "1";
             // 
-            // ingfredientsListView
+            // ingredientsListView
             // 
-            this.ingfredientsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ingredientsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ingredientName,
             this.servingSize});
-            this.ingfredientsListView.HideSelection = false;
-            this.ingfredientsListView.Location = new System.Drawing.Point(14, 70);
-            this.ingfredientsListView.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.ingfredientsListView.Name = "ingfredientsListView";
-            this.ingfredientsListView.Size = new System.Drawing.Size(249, 213);
-            this.ingfredientsListView.TabIndex = 4;
-            this.ingfredientsListView.UseCompatibleStateImageBehavior = false;
-            this.ingfredientsListView.View = System.Windows.Forms.View.Details;
+            this.ingredientsListView.HideSelection = false;
+            this.ingredientsListView.Location = new System.Drawing.Point(14, 70);
+            this.ingredientsListView.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.ingredientsListView.Name = "ingredientsListView";
+            this.ingredientsListView.Size = new System.Drawing.Size(249, 213);
+            this.ingredientsListView.TabIndex = 4;
+            this.ingredientsListView.UseCompatibleStateImageBehavior = false;
+            this.ingredientsListView.View = System.Windows.Forms.View.Details;
             // 
             // ingredientName
             // 
@@ -294,11 +297,22 @@ namespace dietNerdAlpha_1._0._1
             this.sideCheckBox.Text = "Side";
             this.sideCheckBox.UseVisualStyleBackColor = true;
             // 
+            // mealPrepCheckBox
+            // 
+            this.mealPrepCheckBox.AutoSize = true;
+            this.mealPrepCheckBox.Location = new System.Drawing.Point(14, 42);
+            this.mealPrepCheckBox.Name = "mealPrepCheckBox";
+            this.mealPrepCheckBox.Size = new System.Drawing.Size(79, 19);
+            this.mealPrepCheckBox.TabIndex = 21;
+            this.mealPrepCheckBox.Text = "Meal Prep";
+            this.mealPrepCheckBox.UseVisualStyleBackColor = true;
+            // 
             // addNewRecipieForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(536, 365);
+            this.Controls.Add(this.mealPrepCheckBox);
             this.Controls.Add(this.sideCheckBox);
             this.Controls.Add(this.dinnerCheckBox);
             this.Controls.Add(this.nightCheckBox);
@@ -306,7 +320,7 @@ namespace dietNerdAlpha_1._0._1
             this.Controls.Add(this.lunchCheckBox);
             this.Controls.Add(this.morningCheckBox);
             this.Controls.Add(this.breakfastCheckBox);
-            this.Controls.Add(this.ingfredientsListView);
+            this.Controls.Add(this.ingredientsListView);
             this.Controls.Add(this.recipieServingTextBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -343,7 +357,7 @@ namespace dietNerdAlpha_1._0._1
         private System.Windows.Forms.ToolStripMenuItem addToRecipieToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addNewIngredientToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewIngredientToolStripMenuItem;
-        private System.Windows.Forms.ListView ingfredientsListView;
+        private System.Windows.Forms.ListView ingredientsListView;
         private System.Windows.Forms.ColumnHeader ingredientName;
         private System.Windows.Forms.ColumnHeader servingSize;
         private System.Windows.Forms.ToolStripMenuItem resetToolStripMenuItem;
@@ -354,5 +368,6 @@ namespace dietNerdAlpha_1._0._1
         private System.Windows.Forms.CheckBox nightCheckBox;
         private System.Windows.Forms.CheckBox dinnerCheckBox;
         private System.Windows.Forms.CheckBox sideCheckBox;
+        private System.Windows.Forms.CheckBox mealPrepCheckBox;
     }
 }
