@@ -313,6 +313,7 @@ namespace dietNerdAlpha_1._0._1
     class mealTotals
     {
         public string[,] namesAndServing { get; internal set; }
+        public int totalItemsInMeal { get; internal set; }
         public float totalCalories { get; internal set; }
         public float totalFats { get; internal set; }
         public float totalCarbohydrates { get; internal set; }

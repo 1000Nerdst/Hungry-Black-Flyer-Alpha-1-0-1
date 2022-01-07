@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System.Security.Cryptography;
 
 namespace dietNerdAlpha_1._0._1
 {
@@ -15,8 +16,20 @@ namespace dietNerdAlpha_1._0._1
         SqlDataAdapter da;
 
         Random random = new Random();
+
+        RNGCryptoServiceProvider ran = new RNGCryptoServiceProvider();
+        
+
+
+        char[] removeChars = { ' ', '}' };
         public mealTotals loadMealTotals(string MealTiming, bool hasMainCourse, bool needsSideItems, int numOfMealInDB, mealArraySizes mealSizes, filledTypeArrays typeArrays)
         {
+
+            //var byteArray = new byte[4];
+            //ran.GetBytes(byteArray);
+
+            //var randomInt = BitConverter.ToInt32(byteArray, 0);
+
             //types of thing to be removed from strings
             //string[,] mealArray = new string[,] { { "", "" }, { "", "" }, { "", "" }, { "", "" } };
             List<string> mealNames = new List<string>();
@@ -38,6 +51,10 @@ namespace dietNerdAlpha_1._0._1
             //bool hasMainCourse = false;
             //bool needsSideItems = false;
 
+            int startingNum = 1;//random.Next(1, 4);
+
+            int actualNumberOfItem = 0;
+
             switch (MealTiming)
             {
                 case "Breakfast":
@@ -45,14 +62,16 @@ namespace dietNerdAlpha_1._0._1
                     int mainSize = mealSizes.breakfastSize;
 
                     int numberOfItemsInThisMeal = random.Next(1, 3);
-                    int randomMainRecipieNumber = random.Next(1, mainSize);
+                    //int randomMainRecipieNumber = random.Next(1, mainSize - 1);
+                    int randomMainRecipieNumber = random.Next(startingNum, mainSize - 1);
+                    //int randomMainRecipieNumber = ran.GetInt32(1, mainSize - 1);
                     int randomSideRecipeNumber = 0;
                     float servingSizeMultiplier = random.Next(2, 8);
                     float servingMultiplier = (float)(servingSizeMultiplier * 0.25);
 
                     while (numberOfItemsInThisMeal > currentItemsInMeal)
                     {
-                        string[] recpieMainID = typeArrays.midMorningRecipesIDs;
+                        string[] recpieMainID = typeArrays.breakfastRecipesIDs;
                         //string[] recpieSideID = typeArrays.dinnerSidesRecipes;
                         string[] breakfastNames = typeArrays.breakfastRecipes;
 
@@ -68,17 +87,44 @@ namespace dietNerdAlpha_1._0._1
 
                         CurrentRecipe recipeInfo = getRecipeInfo(randomMainRecipieID, randomSideRecipieID, servingMultiplier, hasMain);
 
+                        string mealPrep = "Breakfast Meal Prep";
+                        string currentMealPrep = "Breakfast Meal Prep";
+
+                        while (currentItemsInMeal > 0 && recipeInfo.recipeTiming == mealPrep)
+                        {
+                            //int randomMainRecipieNumber = random.Next(1, mainSize - 1);
+                            randomMainRecipieNumber = random.Next(startingNum, mainSize);
+
+                            randomMainRecipieID = Int32.Parse(recpieMainID[randomMainRecipieNumber]);
+
+                            recipeInfo = getRecipeInfo(randomMainRecipieID, randomSideRecipieID, servingMultiplier, hasMain);
+                        }
+
                         mealNames.Add(recipeInfo.recipeName.ToString());
                         mealSizesString.Add(servingMultiplier.ToString());
 
                         planTotals = totalToPlan(planTotals, recipeInfo);
 
+
+                        while (currentItemsInMeal == 0 && (recipeInfo.recipeTiming.TrimEnd(removeChars) == mealPrep || recipeInfo.recipeTiming.TrimEnd(removeChars) == currentMealPrep))
+                        {
+                            currentItemsInMeal = numberOfItemsInThisMeal + 1;
+                        }
+                        actualNumberOfItem++;
                         currentItemsInMeal++;
+
+                        //int randomMainRecipieNumber = random.Next(1, mainSize - 1);
+                        randomMainRecipieNumber = random.Next(startingNum, mainSize);
+                        randomSideRecipeNumber = 0;
+                        servingSizeMultiplier = random.Next(2, 8);
+                        servingMultiplier = (float)(servingSizeMultiplier * 0.25);
                         //for lunch and dinner
                         //if(currentItemsInMeal > 1)
                         //{
                         //    hasMain = true;
                         //}
+
+
                     }
 
                     break;
@@ -114,7 +160,15 @@ namespace dietNerdAlpha_1._0._1
 
                         planTotals = totalToPlan(planTotals, recipeInfo);
 
+                        actualNumberOfItem++;
                         currentItemsInMeal++;
+
+                        //randomMainRecipieNumber = random.Next(1, mainSize - 1);
+                        randomMainRecipieNumber = random.Next(startingNum, mainSize - 1);
+                        randomSideRecipeNumber = 0;
+                        servingSizeMultiplier = random.Next(2, 8);
+                        servingMultiplier = (float)(servingSizeMultiplier * 0.25);
+
                         //for lunch and dinner
                         //if(currentItemsInMeal > 1)
                         //{
@@ -129,8 +183,22 @@ namespace dietNerdAlpha_1._0._1
                     int sideSize = mealSizes.lunchSidesSize;
 
                     numberOfItemsInThisMeal = random.Next(1, 5);
-                    randomMainRecipieNumber = random.Next(1, mainSize);
-                    randomSideRecipeNumber = random.Next(1, sideSize);
+                    //randomMainRecipieNumber = random.Next(1, mainSize - 1);
+                    randomMainRecipieNumber = random.Next(startingNum, mainSize - 1);
+                    randomSideRecipeNumber = 0;
+                    switch (sideSize)
+                    {
+                        case 0:
+                            randomSideRecipeNumber = 0;
+                            break;
+                        case 1:
+                            randomSideRecipeNumber = 0;
+                            break;
+                        default:
+                            randomSideRecipeNumber = random.Next(1, sideSize);
+                            break;
+                    }
+
                     servingSizeMultiplier = random.Next(2, 8);
                     servingMultiplier = (float)(servingSizeMultiplier * 0.25);
 
@@ -143,20 +211,45 @@ namespace dietNerdAlpha_1._0._1
 
                         string idMainAsString = recpieMainID[randomMainRecipieNumber];
                         int randomMainRecipieID = Int32.Parse(idMainAsString);
-
+                        
                         string idSideAsString = recpieSideID[randomSideRecipeNumber];
                         int randomSideRecipieID = Int32.Parse(idSideAsString);
 
                         bool hasMain = false;
 
                         CurrentRecipe recipeInfo = getRecipeInfo(randomMainRecipieID, randomSideRecipieID, servingMultiplier, hasMain);
+                        string mealPrep = "Meal Prep";
+                        string currentMealPrep = "Lunch Meal Prep";
+
+                        while (currentItemsInMeal > 0 && (recipeInfo.recipeTiming == mealPrep || recipeInfo.recipeTiming == currentMealPrep))
+                        {
+                            //randomMainRecipieNumber = random.Next(1, mainSize - 1);
+                            randomMainRecipieNumber = random.Next(startingNum, mainSize);
+
+                            randomMainRecipieID = Int32.Parse(recpieMainID[randomMainRecipieNumber]);
+
+                            recipeInfo = getRecipeInfo(randomMainRecipieID, randomSideRecipieID, servingMultiplier, hasMain);
+                        }
 
                         mealNames.Add(recipeInfo.recipeName.ToString());
                         mealSizesString.Add(servingMultiplier.ToString());
 
                         planTotals = totalToPlan(planTotals, recipeInfo);
 
+                        while (currentItemsInMeal == 0 && (recipeInfo.recipeTiming.TrimEnd(removeChars) == mealPrep || recipeInfo.recipeTiming.TrimEnd(removeChars) == currentMealPrep))
+                        {
+                            currentItemsInMeal = numberOfItemsInThisMeal + 1;
+                        }
+
+                        actualNumberOfItem++;
                         currentItemsInMeal++;
+
+                        //randomMainRecipieNumber = random.Next(1, mainSize - 1);
+                        randomMainRecipieNumber = random.Next(startingNum, mainSize - 1);
+                        randomSideRecipeNumber = 0;
+                        servingSizeMultiplier = random.Next(2, 8);
+                        servingMultiplier = (float)(servingSizeMultiplier * 0.25);
+
                         //for lunch and dinner
                         if (currentItemsInMeal > 1)
                         {
@@ -170,7 +263,8 @@ namespace dietNerdAlpha_1._0._1
                     mainSize = mealSizes.afternoonSize;
 
                     numberOfItemsInThisMeal = random.Next(1, 2);
-                    randomMainRecipieNumber = random.Next(1, mainSize);
+                    //randomMainRecipieNumber = random.Next(1, mainSize - 1);
+                    randomMainRecipieNumber = random.Next(startingNum, mainSize);
                     randomSideRecipeNumber = 0;
                     servingSizeMultiplier = random.Next(2, 8);
                     servingMultiplier = (float)(servingSizeMultiplier * 0.25);
@@ -197,7 +291,15 @@ namespace dietNerdAlpha_1._0._1
 
                         planTotals = totalToPlan(planTotals, recipeInfo);
 
+                        actualNumberOfItem++;
                         currentItemsInMeal++;
+
+                        //randomMainRecipieNumber = random.Next(1, mainSize - 1);
+                        randomMainRecipieNumber = random.Next(startingNum, mainSize);
+                        randomSideRecipeNumber = 0;
+                        servingSizeMultiplier = random.Next(2, 8);
+                        servingMultiplier = (float)(servingSizeMultiplier * 0.25);
+
                         //for lunch and dinner
                         //if (currentItemsInMeal > 1)
                         //{
@@ -211,15 +313,27 @@ namespace dietNerdAlpha_1._0._1
                     sideSize = mealSizes.dinnerSidesSize;
 
                     numberOfItemsInThisMeal = random.Next(1, 5);
-                    randomMainRecipieNumber = random.Next(1, mainSize);
-                    randomSideRecipeNumber = random.Next(1, sideSize);
+                    //randomMainRecipieNumber = random.Next(1, mainSize - 1);
+                    randomMainRecipieNumber = random.Next(startingNum, mainSize - 1);
+                    switch (sideSize)
+                    {
+                        case 0:
+                            randomSideRecipeNumber = 0;
+                            break;
+                        case 1:
+                            randomSideRecipeNumber = 0;
+                            break;
+                        default:
+                            randomSideRecipeNumber = random.Next(1, sideSize);
+                            break;
+                    }
                     servingSizeMultiplier = random.Next(2, 8);
                     servingMultiplier = (float)(servingSizeMultiplier * 0.25);
 
                     while (numberOfItemsInThisMeal > currentItemsInMeal)
                     {
-                        string[] recpieMainID = typeArrays.midMorningRecipesIDs;
-                        string[] recpieSideID = typeArrays.dinnerSidesRecipes;
+                        string[] recpieMainID = typeArrays.dinnerRecipesIDs;
+                        string[] recpieSideID = typeArrays.dinnerSidesRecipesIDs;
                         string[] breakfastNames = typeArrays.midMorningRecipes;
 
 
@@ -233,12 +347,38 @@ namespace dietNerdAlpha_1._0._1
 
                         CurrentRecipe recipeInfo = getRecipeInfo(randomMainRecipieID, randomSideRecipieID, servingMultiplier, hasMain);
 
+                        string mealPrep = "Meal Prep";
+                        string currentMealPrep = "Dinner Meal Prep";
+
+                        while (currentItemsInMeal > 0 && (recipeInfo.recipeTiming == mealPrep || recipeInfo.recipeTiming == currentMealPrep))
+                        {
+                            //randomMainRecipieNumber = random.Next(1, mainSize - 1);
+                            randomMainRecipieNumber = random.Next(startingNum, mainSize);
+
+                            randomMainRecipieID = Int32.Parse(recpieMainID[randomMainRecipieNumber]);
+
+                            recipeInfo = getRecipeInfo(randomMainRecipieID, randomSideRecipieID, servingMultiplier, hasMain);
+                        }
+
                         mealNames.Add(recipeInfo.recipeName.ToString());
                         mealSizesString.Add(servingMultiplier.ToString());
 
                         planTotals = totalToPlan(planTotals, recipeInfo);
 
+                        while (currentItemsInMeal == 0 && (recipeInfo.recipeTiming.TrimEnd(removeChars) == mealPrep || recipeInfo.recipeTiming.TrimEnd(removeChars) == currentMealPrep))
+                        {
+                            currentItemsInMeal = numberOfItemsInThisMeal + 1;
+                        }
+
+                        actualNumberOfItem++;
                         currentItemsInMeal++;
+
+                        //randomMainRecipieNumber = random.Next(1, mainSize - 1);
+                        randomMainRecipieNumber = random.Next(startingNum, mainSize - 1);
+                        randomSideRecipeNumber = 0;
+                        servingSizeMultiplier = random.Next(2, 8);
+                        servingMultiplier = (float)(servingSizeMultiplier * 0.25);
+
                         //for lunch and dinner
                         if (currentItemsInMeal > 1)
                         {
@@ -251,7 +391,8 @@ namespace dietNerdAlpha_1._0._1
                     mainSize = mealSizes.nightSize;
 
                     numberOfItemsInThisMeal = random.Next(1, 2);
-                    randomMainRecipieNumber = random.Next(1, mainSize);
+                    //randomMainRecipieNumber = random.Next(1, mainSize - 1);
+                    randomMainRecipieNumber = random.Next(startingNum, mainSize);
                     randomSideRecipeNumber = 0;
                     servingSizeMultiplier = random.Next(2, 8);
                     servingMultiplier = (float)(servingSizeMultiplier * 0.25);
@@ -278,7 +419,15 @@ namespace dietNerdAlpha_1._0._1
 
                         planTotals = totalToPlan(planTotals, recipeInfo);
 
+                        actualNumberOfItem++;
                         currentItemsInMeal++;
+
+                        //randomMainRecipieNumber = random.Next(1, mainSize - 1);
+                        randomMainRecipieNumber = random.Next(startingNum, mainSize - 1);
+                        randomSideRecipeNumber = 0;
+                        servingSizeMultiplier = random.Next(2, 8);
+                        servingMultiplier = (float)(servingSizeMultiplier * 0.25);
+
                         //for lunch and dinner
                         //if (currentItemsInMeal > 1)
                         //{
@@ -289,11 +438,33 @@ namespace dietNerdAlpha_1._0._1
                     break;
             }
 
+            planTotals.totalItemsInMeal = actualNumberOfItem;
+
+            string[,] meals = CombineArrays(mealNames.ToArray(), mealSizesString.ToArray());
+
             //load final values into mealTotals class so it can be returned
             finalTotal = planTotals;
+            finalTotal.namesAndServing = meals;
             //add the array of values
 
             return finalTotal;
+        }
+
+        private string[,] CombineArrays(string[] columb1, string[] columb2)
+        {
+            int rows = columb1.Length;
+
+            string[,] finalArray = new string[rows, 2];
+
+            int row = 0;
+            foreach(string item in columb1)
+            {
+                finalArray[row, 0] = columb1[row];
+                finalArray[row, 1] = columb2[row];
+                row++;
+            }
+
+            return finalArray;
         }
 
         private mealTotals totalToPlan(mealTotals planTotals, CurrentRecipe recipeInfo)
@@ -476,7 +647,7 @@ namespace dietNerdAlpha_1._0._1
         {
             CurrentRecipe recipieInformation = new CurrentRecipe();
 
-            using (cn = new SqlConnection(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\solow\OneDrive\Desktop\Projects\Flyer Pitch\dietNerdAlpha 1.0.0\dietNerdAlpha 1.0.0\wholeAppDataBase.mdf; Integrated Security = True"))
+            using (cn = new SqlConnection(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\solow\OneDrive\Desktop\Projects\Hungry Flyer\dietNerdAlpha 1.0.1\dietNerdAlpha 1.0.1\dietNerdAlpha 1.0.1\wholeAppData.mdf; Integrated Security = True"))
             {
                 cn.Open();
 
@@ -490,6 +661,9 @@ namespace dietNerdAlpha_1._0._1
                         {
                             while (dr.Read())
                             {
+                                string recipeName = dr["recipeName"].ToString();
+                                string recipeTiming = dr["timing"].ToString();
+                                float recipeServings = float.Parse(dr["Servings"].ToString());
                                 float recipeCalories = float.Parse(dr["Calories"].ToString());
                                 float recipeFats = float.Parse(dr["Fats_G"].ToString());
                                 float recipeCarbs = float.Parse(dr["Carbs_G"].ToString());
@@ -582,7 +756,9 @@ namespace dietNerdAlpha_1._0._1
                                 recipeDPA = servingMultiplier * recipeDPA;
                                 recipeDHA = servingMultiplier * recipeDHA;
 
-
+                                recipieInformation.recipeName = recipeName;
+                                recipieInformation.recipeCalories = recipeCalories;
+                                recipieInformation.recipeTiming = recipeTiming;
                                 recipieInformation.recipeCalories = recipeCalories;
                                 recipieInformation.recipeFats = recipeFats;
                                 recipieInformation.recipeCarbohydrates = recipeCarbs;

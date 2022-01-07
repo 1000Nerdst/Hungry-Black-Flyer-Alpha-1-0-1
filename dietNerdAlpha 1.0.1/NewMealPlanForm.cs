@@ -244,5 +244,39 @@ namespace dietNerdAlpha_1._0._1
             dinnerTextBox.Text = config.AppSettings.Settings["dinnerNumber"].Value;
             nightSnackTextBox.Text = config.AppSettings.Settings["nightNumber"].Value;
         }
+
+        private void generateButton_Click_1(object sender, EventArgs e)
+        {
+            bool proceed = mealNumberValidation();
+            if (proceed == true)
+            {
+                userMealPlanDataAll mealPlanScreenItems = readMealPlanScreen();
+                DateTime startDate = mealPlanScreenItems.mealPlanStartDate;
+                DateTime endDate = mealPlanScreenItems.mealPlanEndDate;
+                int mealPrepInterval = mealPlanScreenItems.mealPrepInterval;
+
+                float numberOfDays = (float)(endDate - startDate).TotalDays;
+                float numberOfMealToPlan = (float)(numberOfDays / mealPrepInterval);
+                numberOfMealToPlan = (float)Math.Ceiling(numberOfMealToPlan);
+                mealPlanScreenItems.numberOfMealToPlan = numberOfMealToPlan;
+
+                saveToSettings();
+
+                GenerateNewMealPlanV1 generateNewMealPlan = new GenerateNewMealPlanV1();
+                generateNewMealPlan.startGeneration(mealPlanScreenItems);
+                //generateNewMealPlanV1 generatePlan = new generateNewMealPlanV1();
+                //generateNewPlanV3 generatePlanBeta = new generateNewPlanV3();
+                //generateNewPlanV2 generatePlan = new generateNewPlanV2();
+                //generatePlanBeta.startGeneration(mealPlanScreenItems);
+                //generatePlan.startGeneration(mealPlanScreenItems);
+
+
+            }
+        }
+
+        private void saveButton_Click_1(object sender, EventArgs e)
+        {
+            saveToSettings();
+        }
     }
 }

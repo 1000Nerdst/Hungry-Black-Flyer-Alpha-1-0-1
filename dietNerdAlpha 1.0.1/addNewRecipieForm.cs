@@ -320,7 +320,7 @@ namespace dietNerdAlpha_1._0._1
                                     }
                                     if (currentIngredentServingSizeFromList < 1)
                                     {
-                                        float conversitionFactor = 1 / currentIngredentServingSizeFromList;
+                                        float conversitionFactor = 1 * currentIngredentServingSizeFromList;
                                         
                                         totalCalories = totalCalories + (conversitionFactor * ingredentCalories);
                                         totalFats = totalFats + (conversitionFactor * ingredentFats);
@@ -619,7 +619,7 @@ namespace dietNerdAlpha_1._0._1
 
             DBManagement dB = new DBManagement();
 
-            string tableName = "dbo.ingrentsTable";
+            string tableName = "dbo.recipeTable";
             string tableType = "recipe";
             int maxID = dB.findMaxID(connectionString, tableName, tableType);
 
@@ -1116,7 +1116,7 @@ namespace dietNerdAlpha_1._0._1
             {
                 mealTiming = "Main Course";
             }
-            if (breakfastType == "Unchecked" && morninngType == "Unchecked" && lunchType == "Checked" && afternoonType == "Unchecked" && dinnerType == "Unchecked" && nightType == "Unchecked"  && sideType == "Checked")
+            if (breakfastType == "Unchecked" && morninngType == "Unchecked" && lunchType == "Checked" && afternoonType == "Unchecked" && dinnerType == "Checked" && nightType == "Unchecked"  && sideType == "Checked")
             {
                 mealTiming = "Side";
             }
@@ -1128,7 +1128,7 @@ namespace dietNerdAlpha_1._0._1
             {
                 mealTiming = "Dinner Side";
             }
-            if (breakfastType == "Unchecked" && morninngType == "Unchecked" && lunchType == "Checked" && afternoonType == "Unchecked" && dinnerType == "Checked" && nightType == "Unchecked" && sideType == "Checked")
+            if (breakfastType == "Unchecked" && morninngType == "Unchecked" && lunchType == "Unchecked" && afternoonType == "Unchecked" && dinnerType == "Unchecked" && nightType == "Unchecked" && sideType == "Checked")
             {
                 mealTiming = "Side";
             }
